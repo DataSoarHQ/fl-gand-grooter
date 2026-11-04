@@ -363,3 +363,6 @@ html.menu-open .callbar { display: none; }
   .marquee__track { animation: none; }
   .hero__media video { display: none; }
 }
+.footer__legal .footer__credit { flex-basis: 100%; font: 400 .7rem/1.4 var(--body, inherit); text-transform: none; opacity: .65; }
+.footer__credit a { color: inherit; text-decoration: none; }
+.footer__credit a:hover { text-decoration: underline; }
