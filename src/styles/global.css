@@ -84,7 +84,13 @@ p + p { margin-top: 1em; }
 .menu summary { list-style: none; cursor: pointer; display: grid; place-items: center; width: 3rem; height: 3rem; color: var(--yellow); }
 .menu summary::-webkit-details-marker { display: none; }
 .menu summary svg { width: 2rem; height: 2rem; }
-.menu__panel { position: absolute; left: 0; right: 0; top: 100%; max-height: calc(100dvh - var(--header-h)); overflow: auto; background: var(--green-deep); border-top: 3px solid var(--yellow); padding: 1rem 1.25rem 2rem; }
+/* Fixed to the space below the header (--menu-top is set by script) so the panel
+   always fits the screen, scrolls on its own, and never hands scrolling to the page. */
+.menu__panel { position: fixed; left: 0; right: 0; top: var(--menu-top, var(--header-h)); bottom: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; background: var(--green-deep); border-top: 3px solid var(--yellow); padding: 1rem 1.25rem calc(2rem + env(safe-area-inset-bottom)); }
+/* Lock on html only: hiding overflow on body too would make body the scroll
+   container and push the sticky header off screen. */
+html.menu-open { overflow: hidden; }
+html.menu-open .callbar { display: none; }
 .menu__panel h2 { font-size: .85rem; color: var(--yellow); margin: 1.1rem 0 .4rem; letter-spacing: .04em; }
 .menu__panel a { display: block; padding: .45rem 0; font: 700 1.05rem/1.2 var(--head); text-transform: uppercase; text-decoration: none; }
 .menu__panel .menu__areas { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1rem; }
