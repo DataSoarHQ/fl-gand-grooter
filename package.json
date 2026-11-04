@@ -1,0 +1,23 @@
+{
+  "name": "gg-rooter-florida-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/vercel": "^11.0.18",
+    "@fontsource-variable/league-spartan": "^5.3.0",
+    "@fontsource-variable/nunito-sans": "^5.3.0",
+    "astro": "^7.4.5",
+    "sharp": "^0.35.5"
+  }
+}
