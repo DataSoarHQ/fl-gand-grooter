@@ -13,7 +13,7 @@ const { place = 'Lee County' } = Astro.props;
       {why.map((w) => (
         <div class="why__item">
           <Icon name={w.icon} />
-          <div><h3>{w.name}</h3><p>{w.text}</p></div>
+          <div><p class="h why__title">{w.name}</p><p>{w.text}</p></div>
         </div>
       ))}
     </div>

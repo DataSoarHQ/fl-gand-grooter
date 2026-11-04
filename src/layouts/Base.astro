@@ -139,11 +139,11 @@ const year = new Date().getFullYear();
         <summary aria-label="Menu"><Icon name="menu" /></summary>
         <nav class="menu__panel" aria-label="Mobile">
           <a href="/">Home</a>
-          <h2>Drain and Sewer Services</h2>
+          <p class="h menu__label">Drain and Sewer Services</p>
           {services.map((s) => <a href={serviceHref(s)}>{s.short}</a>)}
-          <h2>Service Areas</h2>
+          <p class="h menu__label">Service Areas</p>
           <div class="menu__areas">{areas.map((a) => <a href={areaHref(a)}>{a.name}</a>)}</div>
-          <h2>More</h2>
+          <p class="h menu__label">More</p>
           {moreNav.map((n) => <a href={n.href}>{n.label}</a>)}
           <a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
         </nav>
@@ -166,7 +166,7 @@ const year = new Date().getFullYear();
           <a class="btn btn--wide" href="/contact/">Request Quote</a>
         </div>
         <div>
-          <h2>Legal</h2>
+          <p class="h footer__label">Legal</p>
           <ul>
             <li><a href="/privacy-policy/">Privacy Policy</a></li>
             <li><a href="/accessibility/">ADA Accessibility</a></li>
@@ -175,12 +175,12 @@ const year = new Date().getFullYear();
           </ul>
         </div>
         <div>
-          <h2>Hours</h2>
+          <p class="h footer__label">Hours</p>
           <p>{b.hours}</p>
           <p style="margin-top:1rem"><a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a></p>
         </div>
         <div class="footer__links">
-          <h2>Quick Links</h2>
+          <p class="h footer__label">Quick Links</p>
           <ul>
             <li><a href="/drain-sewer-cleaning-services/">Drain &amp; Sewer Cleaning</a></li>
             <li><a href="/sewer-inspection-services/">Sewer Inspection Services</a></li>
@@ -192,7 +192,7 @@ const year = new Date().getFullYear();
         </div>
       </div>
       <nav class="footer__areas" aria-label="Service areas">
-        <h2>Lee County Service Areas</h2>
+        <p class="h footer__label">Lee County Service Areas</p>
         <ul>{areas.map((a) => <li><a href={areaHref(a)}>{a.name}</a></li>)}</ul>
       </nav>
     </div>

@@ -67,7 +67,7 @@ const schema = services.map((s) => ({
       <div class="section-title"><h2>Services in <span class="hl">{area.name}</span></h2></div>
       <ul class="svc-list">
         {services.map((s) => (
-          <li><a href={serviceHref(s)}><h3>{s.name}</h3><span>{s.card}</span></a></li>
+          <li><a href={serviceHref(s)}><h2>{s.name} in {area.name}</h2><span>{s.card}</span></a></li>
         ))}
       </ul>
       <ul class="ticks ticks--dark" style="margin-top:2rem;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr))">
@@ -85,7 +85,7 @@ const schema = services.map((s) => ({
     <div class="wrap cta-split">
       <div>
         <p class="kicker">Need help in {area.name}?</p>
-        <h2>Call Now or Request a Callback</h2>
+        <p class="h cta__title">Call Now or Request a Callback</p>
         <p>Tell us what’s going on and where you are in {area.name}. For backups and water emergencies, calling is fastest. We answer 24/7.</p>
         <div class="actions">
           <a class="btn btn--lg" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
@@ -99,7 +99,7 @@ const schema = services.map((s) => ({
 
   <section class="section section--mist">
     <div class="wrap center">
-      <div class="section-title"><h2>Also Serving Nearby</h2></div>
+      <div class="section-title"><h2>Drain Cleaning Near {area.name}</h2></div>
       <div class="nearby">
         {nearby.map((a) => <a href={areaHref(a)}>Drain cleaning in {a.name}</a>)}
       </div>

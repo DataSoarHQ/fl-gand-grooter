@@ -7,7 +7,7 @@ const list = areas.filter((a) => a.name !== exclude);
 <section class:list={green ? ['band', 'band--tabs'] : ['section', 'section--mist']}>
   <div class="wrap">
     <div class="area-title">
-      <h2>{title[0]}<br /><span class={green ? 'hl-y' : 'hl'}>{title[1]}</span></h2>
+      <h2>{title[0]}{' '}<br /><span class={green ? 'hl-y' : 'hl'}>{title[1]}</span></h2>
       <p>{text}</p>
     </div>
     <ul class="area-grid">
