@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+import { business as b } from '../data/site';
+---
+<section class="social-band">
+  <div class="wrap">
+    <h2>See the Team at Work</h2>
+    <p>Follow G&amp;G Rooter for real jobs, tough clogs, and life on the road.</p>
+    <div class="actions">
+      <a class="btn" href={b.social.Instagram} rel="noopener"><Icon name="instagram" />Follow @ggrooter</a>
+      <a class="btn btn--outline" href={b.social.Facebook} rel="noopener"><Icon name="facebook" />Facebook</a>
+    </div>
+  </div>
+</section>

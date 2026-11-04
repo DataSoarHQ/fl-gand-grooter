@@ -1,0 +1,18 @@
+---
+// Links to all 20 Lee County service area pages.
+import { areas, areaHref } from '../data/areas';
+const { title = ['Lee County', 'Service Areas'], text = 'G&G Rooter serves all of Lee County, FL. Pick your community for local details, or call and we’ll come to you.', green = true, exclude = '' } = Astro.props;
+const list = areas.filter((a) => a.name !== exclude);
+---
+<section class:list={green ? ['band', 'band--tabs'] : ['section', 'section--mist']}>
+  <div class="wrap">
+    <div class="area-title">
+      <h2>{title[0]}<br /><span class={green ? 'hl-y' : 'hl'}>{title[1]}</span></h2>
+      <p>{text}</p>
+    </div>
+    <ul class="area-grid">
+      {list.map((a) => <li><a href={areaHref(a)}>{a.name}</a></li>)}
+      <li><a href="/service-areas/">All of Lee County</a></li>
+    </ul>
+  </div>
+</section>

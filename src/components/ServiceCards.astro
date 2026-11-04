@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+import { services, serviceHref } from '../data/site';
+const { place = '' } = Astro.props;
+---
+<section class="section">
+  <div class="wrap">
+    <div class="section-title">
+      <h2><span class="hl">Efficient</span> and <em class="hl">Reliable</em> Drain,<br />Sewer &amp; Cleanup Services{place && <> in {place}</>}</h2>
+    </div>
+    <div class="cards">
+      {services.map((s) => (
+        <article class="card">
+          <Image src={s.image} alt={place ? `${s.name} in ${place}` : s.imageAlt} widths={[400, 640]} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 25vw" />
+          <div class="card__body">
+            <h3>{s.name.replace(' Services', '')}{s.name.endsWith('Services') && <><br />Services</>}</h3>
+            <p>{s.card}</p>
+            <a class="btn" href={serviceHref(s)} aria-label={`Learn more about ${s.name}`}>Learn More</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

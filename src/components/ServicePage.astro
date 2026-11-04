@@ -1,0 +1,83 @@
+---
+// Template for the four service pages, matching the main site's layout:
+// video hero with callback form, yellow "signs" band, image banner, green rows, area list.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import CallbackForm from './CallbackForm.astro';
+import AreaGrid from './AreaGrid.astro';
+import Reviews from './Reviews.astro';
+import { business as b, serviceOptions, type Service } from '../data/site';
+import { areas } from '../data/areas';
+
+const { service: s } = Astro.props as { service: Service };
+const option = serviceOptions.find((o) => s.name.toLowerCase().startsWith(o.toLowerCase().split(' ')[0])) ?? '';
+const schema = [{
+  '@type': 'Service',
+  name: s.name,
+  serviceType: s.name,
+  description: s.description,
+  provider: { '@id': `${b.url}/#business` },
+  areaServed: [{ '@type': 'AdministrativeArea', name: 'Lee County, FL' }, ...areas.map((a) => ({ '@type': 'Place', name: `${a.name}, FL` }))],
+  hasOfferCatalog: { '@type': 'OfferCatalog', name: s.sectionLabel, itemListElement: s.items.map((i) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: i.name, description: i.text } })) },
+}];
+---
+<Base title={s.title} description={s.description} crumb={s.name} extraSchema={schema}>
+  <section class="svc-hero">
+    <div class="hero__media" style="position:absolute;inset:0;z-index:-2">
+      <Image src={s.poster} alt="" widths={[800, 1400, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
+      <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" data-hero-video><source src={s.video} type="video/mp4" /></video>
+    </div>
+    <div class="wrap svc-hero__in">
+      <div class="svc-hero__copy">
+        <h1>{s.h1[0]}<br />{s.h1[1]}</h1>
+        <div class="actions">
+          <a class="btn btn--lg" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+          <a class="btn btn--lg" href="#more">Learn More</a>
+        </div>
+        <a class="down" href="#more" aria-label="Scroll to more information"><Icon name="down" /></a>
+      </div>
+      <CallbackForm service={option} page={s.name} />
+    </div>
+  </section>
+
+  <div class="yband" id="more"><h2>{s.signs}</h2></div>
+
+  <section class="section">
+    <div class="wrap signs">
+      <div class="banner-img">
+        <Image src={s.banner} alt={s.bannerAlt} widths={[600, 1000]} sizes="(max-width: 960px) 100vw, 50vw" />
+        <h2>{s.bannerTitle[0]}<br />{s.bannerTitle[1]}</h2>
+      </div>
+      <div>
+        <p>{s.body[0]}</p>
+        <p>{s.body[1]}</p>
+        <a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--tabs band--notch">
+    <div class="wrap">
+      <div class="section-title">
+        <p class="kicker">{s.sectionLabel}</p>
+        <h2>{s.sectionTitle}</h2>
+      </div>
+      <div class="rows">
+        {s.items.map((item) => (
+          <div class="row">
+            <div>
+              <h3>{item.name}</h3>
+              <p>{item.text}</p>
+              <a class="btn" href="#callback">Get Help</a>
+            </div>
+            <Image src={item.image} alt={item.alt} widths={[500, 800]} sizes="(max-width: 960px) 100vw, 40vw" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Reviews />
+  <AreaGrid title={s.areasLabel} text={`G&G Rooter provides ${s.name.toLowerCase()} throughout Lee County, FL, including these communities.`} />
+</Base>

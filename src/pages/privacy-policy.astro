@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { business as b } from '../data/site';
+---
+<Base title="Privacy Policy" crumb="Privacy Policy" description="How G&G Rooter handles information you share through the Florida website.">
+  <section class="section">
+    <div class="wrap prose">
+      <h1 class="hl">Privacy Policy</h1>
+      <p style="margin-top:1rem">This policy covers {b.url.replace('https://', '')}, the Florida website of {b.legalName}.</p>
+      <h2>What we collect</h2>
+      <p>When you fill out a form, we receive what you enter: your name, phone number, email, zip code or service address, the service you need, and any message or resume you attach. We use it only to respond to you, schedule and complete service, take payment for work we’ve done, or review your job application.</p>
+      <h2>How it’s sent</h2>
+      <p>Form submissions are emailed to our office through an email delivery service. If you give us your email address, we send you a confirmation. We don’t sell or rent your information, and we don’t add you to marketing lists.</p>
+      <h2>Payments</h2>
+      <p>Don’t enter card numbers in our website forms. If you pay online, payment is handled by a third-party payment processor under its own privacy policy.</p>
+      <h2>Analytics</h2>
+      <p>We may use Google Analytics to understand how visitors use the site, such as which pages are viewed. This uses cookies and does not tell us who you are.</p>
+      <h2>Questions</h2>
+      <p>To ask about or remove information you’ve sent us, call <a href={b.phoneHref}>{b.phoneDisplay}</a>.</p>
+    </div>
+  </section>
+</Base>

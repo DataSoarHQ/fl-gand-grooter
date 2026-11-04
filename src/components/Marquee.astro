@@ -1,0 +1,11 @@
+---
+import { marquee } from '../data/site';
+// Two copies so the strip loops without a gap.
+const items = [...marquee, ...marquee, ...marquee, ...marquee];
+---
+<div class="marquee">
+  <p class="sr">{marquee.join(', ')}</p>
+  <div class="marquee__track" aria-hidden="true">
+    {items.map((m) => <span>{m}</span>)}
+  </div>
+</div>

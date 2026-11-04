@@ -1,0 +1,27 @@
+---
+// "Say goodbye to clogged drains" green split from the main site.
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { business as b, highlights } from '../data/site';
+import p from '../data/photos';
+
+const { id = 'more', place = 'Lee County', alt = 'Sewer camera monitor set up beside a floor drain in Lee County, FL' } = Astro.props;
+---
+<section class="band band--notch" id={id}>
+  <div class="wrap split">
+    <div class="split__copy">
+      <p class="kicker">Say Goodbye to Clogged Drains</p>
+      <h2>Fast Service.<br />Proven Trust.</h2>
+      <p>G&amp;G Rooter helps {place} homeowners and businesses with clogged drains, sewer backups, sewer inspections, sewage cleanup, water damage cleanup, and mold mitigation.</p>
+      <ul class="ticks">{highlights.map((h) => <li>{h}</li>)}</ul>
+      <div class="stack">
+        <a class="btn btn--wide btn--lg" href="/faqs/">FAQs</a>
+        <a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+      </div>
+    </div>
+    <div class="photo-frame">
+      <Image src={p.floorCamera} alt={alt} widths={[500, 800]} sizes="(max-width: 960px) 100vw, 50vw" />
+      <p class="badge247"><strong>24/7</strong><span>Coverage</span></p>
+    </div>
+  </div>
+</section>

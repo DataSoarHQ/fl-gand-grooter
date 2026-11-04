@@ -1,0 +1,40 @@
+---
+// "Request Callback" form from the main site. Posts to /api/form; the shared
+// script in Base.astro handles sending and status messages.
+import { serviceOptions, urgencyOptions } from '../data/site';
+
+const { title = 'Request Callback', service = '', page = '', flat = false, id = 'callback' } = Astro.props;
+---
+<div class:list={['formcard', { 'formcard--flat': flat }]} id={id}>
+  <h2>{title}</h2>
+  <form class="form" data-site-form novalidate>
+    <input type="hidden" name="form" value="callback" />
+    <input type="hidden" name="page" value={page} />
+    <div class="field"><label for={`${id}-first`}>First name <span class="req">*</span></label><input id={`${id}-first`} name="firstName" required autocomplete="given-name" maxlength="60" /></div>
+    <div class="field"><label for={`${id}-last`}>Last name <span class="req">*</span></label><input id={`${id}-last`} name="lastName" required autocomplete="family-name" maxlength="60" /></div>
+    <div class="field"><label for={`${id}-phone`}>Phone <span class="req">*</span></label><input id={`${id}-phone`} name="phone" type="tel" required autocomplete="tel" maxlength="30" /></div>
+    <div class="field"><label for={`${id}-email`}>Email</label><input id={`${id}-email`} name="email" type="email" autocomplete="email" maxlength="200" /></div>
+    <div class="field"><label for={`${id}-zip`}>Zip code</label><input id={`${id}-zip`} name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="10" /></div>
+    <div class="field">
+      <label for={`${id}-urgency`}>Urgency</label>
+      <select id={`${id}-urgency`} name="urgency">
+        <option value="">Select urgency level</option>
+        {urgencyOptions.map((o) => <option>{o}</option>)}
+      </select>
+    </div>
+    <div class="field field--full">
+      <label for={`${id}-service`}>Service needed <span class="req">*</span></label>
+      <select id={`${id}-service`} name="service" required>
+        <option value="">Choose one</option>
+        {serviceOptions.map((o) => <option selected={o === service}>{o}</option>)}
+      </select>
+    </div>
+    <div class="field field--full"><label for={`${id}-message`}>Anything we should know?</label><textarea id={`${id}-message`} name="message" rows="2" maxlength="4000"></textarea></div>
+    <div class="hp" aria-hidden="true"><label for={`${id}-company`}>Leave this empty</label><input id={`${id}-company`} name="company" tabindex="-1" autocomplete="off" /></div>
+    <div class="form__foot">
+      <p class="form__note">Emergency? Call us instead, 24/7.</p>
+      <button class="btn" type="submit">Send</button>
+    </div>
+    <p class="form__status" role="status" data-form-status></p>
+  </form>
+</div>

@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { business as b } from '../data/site';
+const { image, eyebrow, title, next = '#more', call = true } = Astro.props;
+---
+<header class="pagehead">
+  {image && <Image src={image} alt="" widths={[800, 1400, 1920]} sizes="100vw" loading="eager" />}
+  <div class="pagehead__in">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {call && <a class="btn btn--lg" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>}
+    <slot />
+    <a class="down" href={next} aria-label="Scroll to more information"><Icon name="down" /></a>
+  </div>
+</header>

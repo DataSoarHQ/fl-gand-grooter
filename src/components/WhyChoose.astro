@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import { why } from '../data/site';
+const { place = 'Lee County' } = Astro.props;
+---
+<section class="band band--tabs">
+  <div class="wrap">
+    <div class="section-title">
+      <p class="kicker">Why choose G&amp;G Rooter{place !== 'Lee County' && <> in {place}</>}?</p>
+      <h2 class="hl-y">Built on Experience, Fast Response, and Family Values</h2>
+    </div>
+    <div class="why">
+      {why.map((w) => (
+        <div class="why__item">
+          <Icon name={w.icon} />
+          <div><h3>{w.name}</h3><p>{w.text}</p></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

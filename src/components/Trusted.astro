@@ -1,0 +1,23 @@
+---
+// Main site's "Trusted Across Rock County" band, rewritten for the Florida branch.
+// The Wisconsin award badges are left off because they name Janesville.
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { business as b } from '../data/site';
+import p from '../data/photos';
+---
+<section class="band band--tabs band--notch">
+  <div class="wrap trusted">
+    <div>
+      <h2>Family-Owned.<br />Now Serving Lee County.</h2>
+      <p>G&amp;G Rooter brings the same fast drain, sewer, cleanup, and mold mitigation service to Southwest Florida, from Cape Coral and Fort Myers to Bonita Springs, Lehigh Acres, and Pine Island.</p>
+      <p>Call today for dependable service backed by {b.years} years of experience and strong customer reviews.</p>
+    </div>
+    <div class="center">
+      <a class="btn btn--lg" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+    </div>
+    <div class="trusted__photo">
+      <Image src={p.techThumbs} alt="Smiling G&G Rooter technician giving a thumbs up next to a drain machine" widths={[400, 700]} sizes="(max-width: 960px) 26rem, 30vw" />
+    </div>
+  </div>
+</section>

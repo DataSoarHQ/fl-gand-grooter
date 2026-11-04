@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import CallbackForm from '../components/CallbackForm.astro';
+import Icon from '../components/Icon.astro';
+import { areas, areaHref } from '../data/areas';
+import { business as b } from '../data/site';
+import p from '../data/photos';
+---
+<Base title="Service Areas in Lee County, FL" crumb="Service Areas" description="G&G Rooter serves all of Lee County, FL: Cape Coral, Fort Myers, Bonita Springs, Lehigh Acres, Estero, Fort Myers Beach, Pine Island and more. Open 24/7.">
+  <PageHead image={p.heroHandshake} eyebrow="Drain & sewer service across Southwest Florida" title="Lee County Service Areas" />
+  <section class="section" id="more">
+    <div class="wrap">
+      <div class="area-title">
+        <h2>Serving All of<br /><span class="hl">Lee County, FL</span></h2>
+        <p>G&amp;G Rooter provides drain cleaning, sewer cleaning, sewer inspections, sewage and water cleanup, and mold mitigation anywhere in Lee County. Choose your community to learn more, or call {b.phoneDisplay} any time.</p>
+      </div>
+      <ul class="area-grid">
+        {areas.map((a) => <li><a href={areaHref(a)}>{a.name}</a></li>)}
+      </ul>
+      <p style="margin-top:2rem">Don’t see your neighborhood? If you’re in Lee County, we serve you. <a class="hl" href={b.phoneHref}>Call {b.phoneDisplay}</a>.</p>
+    </div>
+  </section>
+  <section class="band band--tabs">
+    <div class="wrap cta-split">
+      <div>
+        <h2>Need Help Today?</h2>
+        <p>Clogged drain, sewer backup, standing water, or a mold concern? Call now or request a callback.</p>
+        <div class="actions"><a class="btn btn--lg" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a></div>
+      </div>
+      <CallbackForm page="Service areas" flat />
+    </div>
+  </section>
+</Base>

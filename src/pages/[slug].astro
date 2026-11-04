@@ -1,0 +1,19 @@
+---
+// Builds the four service pages and the 20 area pages at the top level, so URLs
+// match the main site (/drain-sewer-cleaning-services/) and the Florida plan
+// (/drain-cleaning-cape-coral/).
+import ServicePage from '../components/ServicePage.astro';
+import AreaPage from '../components/AreaPage.astro';
+import { services } from '../data/site';
+import { areas } from '../data/areas';
+
+export function getStaticPaths() {
+  return [
+    ...services.map((service) => ({ params: { slug: service.slug }, props: { kind: 'service', service } })),
+    ...areas.map((area, index) => ({ params: { slug: `drain-cleaning-${area.slug}` }, props: { kind: 'area', area, index } })),
+  ];
+}
+
+const { kind, service, area, index } = Astro.props;
+---
+{kind === 'service' ? <ServicePage service={service} /> : <AreaPage area={area} index={index} />}

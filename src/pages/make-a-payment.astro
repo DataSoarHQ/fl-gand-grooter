@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import { business as b } from '../data/site';
+import p from '../data/photos';
+---
+<Base title="Make a Payment | G&G Rooter Drain & Sewer Services Lee County" crumb="Payments" description="Pay toward an existing G&G Rooter invoice for drain, sewer, cleanup or mold service in Lee County, FL. Have your invoice number or service address ready.">
+  <PageHead image={p.cameraMonitor} eyebrow="Secure online payments" title="Make a Payment" call={false} />
+  <section class="section" id="more">
+    <div class="wrap cta-split" style="align-items:start">
+      <div>
+        <h2 class="hl">Simple Payment for Completed Service</h2>
+        <p>If you owe a balance for a completed G&amp;G Rooter service, you can pay using your invoice number, job address, or service details.</p>
+        {b.paymentUrl ? (
+          <p style="margin-top:1.5rem"><a class="btn btn--lg" href={b.paymentUrl} rel="noopener">Pay Online Now</a></p>
+        ) : (
+          <p>Send us your details below and our office will contact you to take payment securely. Please don’t enter card numbers in this form.</p>
+        )}
+        <p>Not sure what you owe? Call G&amp;G Rooter before submitting payment.</p>
+        <p style="margin-top:1.5rem"><a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a></p>
+      </div>
+      <div class="formcard formcard--flat">
+        <h2>Payment Details</h2>
+        <form class="form" data-site-form novalidate data-success="Thanks! We got your payment details and will contact you to finish the payment.">
+          <input type="hidden" name="form" value="payment" />
+          <div class="field"><label for="pay-first">First name <span class="req">*</span></label><input id="pay-first" name="firstName" required autocomplete="given-name" maxlength="60" /></div>
+          <div class="field"><label for="pay-last">Last name <span class="req">*</span></label><input id="pay-last" name="lastName" required autocomplete="family-name" maxlength="60" /></div>
+          <div class="field"><label for="pay-phone">Phone <span class="req">*</span></label><input id="pay-phone" name="phone" type="tel" required autocomplete="tel" maxlength="30" /></div>
+          <div class="field"><label for="pay-email">Email</label><input id="pay-email" name="email" type="email" autocomplete="email" maxlength="200" /></div>
+          <div class="field field--full"><label for="pay-address">Service address <span class="req">*</span></label><input id="pay-address" name="address" required autocomplete="street-address" maxlength="300" /></div>
+          <div class="field"><label for="pay-invoice">Invoice number</label><input id="pay-invoice" name="invoice" maxlength="60" /></div>
+          <div class="field"><label for="pay-amount">Payment amount</label><input id="pay-amount" name="amount" inputmode="decimal" maxlength="20" placeholder="$" /></div>
+          <div class="hp" aria-hidden="true"><label for="pay-company">Leave this empty</label><input id="pay-company" name="company" tabindex="-1" autocomplete="off" /></div>
+          <div class="form__foot"><button class="btn" type="submit">Send Details</button></div>
+          <p class="form__status" role="status" data-form-status></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { business as b } from '../data/site';
+---
+<Base title="ADA Accessibility Statement" crumb="Accessibility" description="G&G Rooter's commitment to an accessible website for everyone in Lee County, FL.">
+  <section class="section">
+    <div class="wrap prose">
+      <h1 class="hl">ADA Accessibility Statement</h1>
+      <p style="margin-top:1rem">{b.legalName} wants everyone to be able to use this website, including people who use screen readers, keyboard navigation, or other assistive technology.</p>
+      <h2>What we do</h2>
+      <ul>
+        <li>Pages use headings, labels, and landmarks so they can be navigated with assistive technology.</li>
+        <li>Every form field has a visible label, and form messages are announced to screen readers.</li>
+        <li>Images that carry information have text descriptions.</li>
+        <li>Background videos are muted, decorative, and stop when your device asks for reduced motion.</li>
+        <li>The site works with a keyboard alone and shows a visible focus outline.</li>
+      </ul>
+      <h2>Need help?</h2>
+      <p>If anything on this site is hard to use, or you’d rather talk to a person, call us 24/7 at <a href={b.phoneHref}>{b.phoneDisplay}</a>. We’ll help you directly and work to fix the problem.</p>
+    </div>
+  </section>
+</Base>

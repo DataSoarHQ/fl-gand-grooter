@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import { business as b, reviews } from '../data/site';
+---
+<section class="section">
+  <div class="wrap">
+    <div class="section-title"><h2>Why Customers Call <span class="hl">G&amp;G Rooter</span></h2></div>
+    <div class="reviews">
+      {reviews.map((r) => (
+        <blockquote class="review">
+          <p class="stars" aria-label="5 out of 5 stars">★★★★★</p>
+          <p>{r.quote}</p>
+          <cite>{r.who}</cite>
+        </blockquote>
+      ))}
+    </div>
+    {b.googleReviewUrl && (
+      <div class="review-cta">
+        <a class="btn btn--black btn--lg" href={b.googleReviewUrl} rel="noopener"><Icon name="google" />Leave us a review on Google</a>
+      </div>
+    )}
+  </div>
+</section>

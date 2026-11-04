@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { business as b } from '../data/site';
+---
+<Base title="Page Not Found" noindex description="This page doesn't exist. Head back to G&G Rooter's Lee County drain and sewer services.">
+  <section class="section center">
+    <div class="wrap--narrow" style="margin-inline:auto">
+      <h1 class="hl">Page Not Found</h1>
+      <p style="margin:1rem 0 2rem">That page doesn’t exist, but we can still help with your drain.</p>
+      <div class="actions actions--center">
+        <a class="btn btn--black" href="/">Go to the homepage</a>
+        <a class="btn" href={b.phoneHref}><Icon name="phone" />Call {b.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+</Base>

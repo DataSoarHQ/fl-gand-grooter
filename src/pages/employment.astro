@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { positions, experienceOptions, startOptions } from '../data/site';
+import p from '../data/photos';
+const yesNo = ['Yes', 'No'];
+---
+<Base title="Employment Opportunities in Lee County, FL | G&G Rooter" crumb="Employment" description="Apply to work with G&G Rooter in Lee County, FL. We're hiring drain technicians, helpers and apprentices, laborers and office staff for our Florida team.">
+  <PageHead image={p.drainBanner} eyebrow="Join G&G Rooter" title="Employment Opportunities" call={false}>
+    <a class="btn btn--lg" href="#apply">Apply Now</a>
+  </PageHead>
+
+  <section class="section" id="more">
+    <div class="wrap signs">
+      <div>
+        <p class="kicker hl">A hands-on role for reliable people</p>
+        <h2 style="margin-top:.5rem">Join a Family-Owned Team</h2>
+        <p style="margin-top:1rem">G&amp;G Rooter is looking for reliable, hardworking team members to help serve homes and businesses across Lee County.</p>
+        <p>This role is hands-on, customer-facing, and built for someone dependable, professional, and ready to work.</p>
+        <p style="margin-top:1.5rem"><a class="btn" href="#apply">Apply Now</a></p>
+      </div>
+      <Image src={p.techThumbs} alt="G&G Rooter technician on the job" widths={[500, 800]} sizes="(max-width: 960px) 100vw, 45vw" style="width:100%;aspect-ratio:4/3;object-fit:cover" />
+    </div>
+  </section>
+
+  <section class="band band--tabs" id="apply">
+    <div class="wrap cta-split" style="align-items:start">
+      <div>
+        <p class="kicker">Now hiring service technicians</p>
+        <h2 style="margin-top:.5rem">Apply to G&amp;G Rooter Florida</h2>
+        <p>G&amp;G Rooter is hiring service technicians to help with drain and sewer service calls across Lee County.</p>
+        <p>This position is customer-facing, physically active, and built for someone who takes pride in showing up, solving problems, and doing the job right.</p>
+      </div>
+      <div class="formcard formcard--flat">
+        <h2>Apply Now</h2>
+        <form class="form" data-site-form novalidate data-success="Thanks for applying! We’ll review your application and reach out if it’s a fit.">
+          <input type="hidden" name="form" value="application" />
+          <div class="field"><label for="ap-first">First name <span class="req">*</span></label><input id="ap-first" name="firstName" required autocomplete="given-name" maxlength="60" /></div>
+          <div class="field"><label for="ap-last">Last name <span class="req">*</span></label><input id="ap-last" name="lastName" required autocomplete="family-name" maxlength="60" /></div>
+          <div class="field"><label for="ap-phone">Phone <span class="req">*</span></label><input id="ap-phone" name="phone" type="tel" required autocomplete="tel" maxlength="30" /></div>
+          <div class="field"><label for="ap-email">Email <span class="req">*</span></label><input id="ap-email" name="email" type="email" required autocomplete="email" maxlength="200" /></div>
+          <div class="field field--full">
+            <label for="ap-position">What position are you applying for? <span class="req">*</span></label>
+            <select id="ap-position" name="position" required><option value="">Choose one</option>{positions.map((o) => <option>{o}</option>)}</select>
+          </div>
+          <div class="field">
+            <label for="ap-exp">Years of industry experience</label>
+            <select id="ap-exp" name="experience"><option value="">Choose one</option>{experienceOptions.map((o) => <option>{o}</option>)}</select>
+          </div>
+          <div class="field">
+            <label for="ap-start">Earliest start date</label>
+            <select id="ap-start" name="start"><option value="">Choose one</option>{startOptions.map((o) => <option>{o}</option>)}</select>
+          </div>
+          <div class="field field--full">
+            <label for="ap-oncall">Are you available to work on-call rotations, evenings, or weekends?</label>
+            <select id="ap-oncall" name="oncall"><option value="">Choose one</option>{yesNo.map((o) => <option>{o}</option>)}</select>
+          </div>
+          <div class="field field--full"><label for="ap-resume">Upload your resume (PDF or Word, up to 4 MB)</label><input id="ap-resume" name="resume" type="file" accept=".pdf,.doc,.docx,.rtf,.txt,.odt,.jpg,.jpeg,.png" /></div>
+          <div class="field field--full"><label for="ap-msg">Anything else we should know?</label><textarea id="ap-msg" name="message" rows="4" maxlength="4000" placeholder="Tell us about your work experience, availability, and why you want to work with G&G Rooter."></textarea></div>
+          <div class="hp" aria-hidden="true"><label for="ap-company">Leave this empty</label><input id="ap-company" name="company" tabindex="-1" autocomplete="off" /></div>
+          <div class="form__foot"><button class="btn" type="submit">Submit Application</button></div>
+          <p class="form__status" role="status" data-form-status></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,257 @@
+---
+import '@fontsource-variable/league-spartan';
+import '@fontsource-variable/nunito-sans';
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import Icon from '../components/Icon.astro';
+import { business as b, services, serviceHref, moreNav } from '../data/site';
+import { areas, areaHref } from '../data/areas';
+import p from '../data/photos';
+
+const { title, description, noindex = false, crumb: crumbName, parents = [], extraSchema = [] } = Astro.props;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const canonical = new URL(path, b.url).href;
+const pageTitle = path === '/' || title.includes(b.name) ? title : `${title} | ${b.name}`;
+const robots = !b.launch || noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1';
+const ogImage = `${b.url}/og.jpg`;
+const ogImageAlt = 'G&G Rooter drain cleaning and sewer services in Lee County, FL';
+
+const businessId = `${b.url}/#business`;
+const websiteId = `${b.url}/#website`;
+const crumb = crumbName ?? title;
+const trail = [{ name: 'Home', item: `${b.url}/` }, ...parents.map((x) => ({ name: x.name, item: new URL(x.href, b.url).href })), { name: crumb, item: canonical }];
+
+const graph = [
+  {
+    '@type': 'Plumber',
+    '@id': businessId,
+    name: `${b.name} Florida`,
+    legalName: b.legalName,
+    alternateName: [b.name, 'G and G Rooter', 'G&G Rooter Lee County'],
+    description: 'Drain cleaning, sewer cleaning, sewer camera inspections, sewage and water damage cleanup, and mold mitigation in Lee County, Florida. Open 24/7.',
+    url: `${b.url}/`,
+    telephone: b.phoneE164,
+    image: ogImage,
+    logo: `${b.url}/logo.png`,
+    priceRange: '$$',
+    // Service-area business: no street address until G&G confirms one for Florida.
+    address: { '@type': 'PostalAddress', addressRegion: 'FL', addressCountry: 'US' },
+    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
+    areaServed: [{ '@type': 'AdministrativeArea', name: 'Lee County, FL' }, ...areas.map((a) => ({ '@type': 'Place', name: `${a.name}, FL` }))],
+    hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Drain, sewer and cleanup services', itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, description: s.card, url: `${b.url}${serviceHref(s)}` } })) },
+    parentOrganization: { '@type': 'Organization', name: b.legalName, url: `${b.mainSite}/` },
+    sameAs: Object.values(b.social),
+  },
+  { '@type': 'WebSite', '@id': websiteId, url: `${b.url}/`, name: `${b.name} Florida`, inLanguage: 'en-US', publisher: { '@id': businessId } },
+  { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: pageTitle, description, inLanguage: 'en-US', isPartOf: { '@id': websiteId }, about: { '@id': businessId } },
+  ...(path === '/' || noindex ? [] : [{ '@type': 'BreadcrumbList', itemListElement: trail.map((t, i) => ({ '@type': 'ListItem', position: i + 1, ...t })) }]),
+  ...extraSchema,
+];
+const schema = { '@context': 'https://schema.org', '@graph': graph };
+const isCurrent = (href: string) => (path === href ? 'page' : undefined);
+const inServices = services.some((s) => path === serviceHref(s));
+const inAreas = path === '/service-areas/' || areas.some((a) => path === areaHref(a));
+const inMore = moreNav.some((n) => path === n.href);
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={robots} />
+  <link rel="canonical" href={canonical} />
+  <meta name="author" content={b.legalName} />
+  <meta name="application-name" content={`${b.name} Florida`} />
+  <meta name="geo.region" content="US-FL" />
+  <meta name="geo.placename" content="Lee County, Florida" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#063219" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content={`${b.name} Florida`} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  {b.gaId && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${b.gaId}`}></script>
+      <script is:inline define:vars={{ id: b.gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', id);
+      </script>
+    </>
+  )}
+  <slot name="head" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <p class="topbar">Need help now? <a href={b.phoneHref}>Call G&amp;G Rooter today</a>. Open 24 hours 7 days a week</p>
+  <header class="header">
+    <div class="header__in">
+      <a class="brand" href="/" aria-label={`${b.name} home`}>
+        <Image src={p.logo} alt={`${b.name} logo`} widths={[120, 240]} sizes="104px" loading="eager" />
+      </a>
+      <nav class="nav" aria-label="Main">
+        <div class="nav__item"><a class="nav__link" href="/" aria-current={isCurrent('/')}>Home</a></div>
+        <div class="nav__item">
+          <a class:list={['nav__link', { 'is-current': inServices }]} href={serviceHref(services[0])}>Drain and Sewer Services <Icon name="caret" /></a>
+          <div class="nav__menu">
+            {services.map((s) => <a href={serviceHref(s)} aria-current={isCurrent(serviceHref(s))}>{s.short}</a>)}
+          </div>
+        </div>
+        <div class="nav__item">
+          <a class:list={['nav__link', { 'is-current': inAreas }]} href="/service-areas/">Service Areas <Icon name="caret" /></a>
+          <div class="nav__menu nav__menu--cols">
+            {areas.map((a) => <a href={areaHref(a)} aria-current={isCurrent(areaHref(a))}>{a.name}</a>)}
+            <a class="nav__all" href="/service-areas/">All Lee County service areas</a>
+          </div>
+        </div>
+        <div class="nav__item">
+          <a class:list={['nav__link', { 'is-current': inMore }]} href="/about/">More <Icon name="caret" /></a>
+          <div class="nav__menu">
+            {moreNav.map((n) => <a href={n.href} aria-current={isCurrent(n.href)}>{n.label}</a>)}
+          </div>
+        </div>
+      </nav>
+      <div class="header__cta">
+        <a class="btn btn--outline" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+        <a class="btn" href="/contact/">Request Quote</a>
+      </div>
+      <details class="menu">
+        <summary aria-label="Menu"><Icon name="menu" /></summary>
+        <nav class="menu__panel" aria-label="Mobile">
+          <a href="/">Home</a>
+          <h2>Drain and Sewer Services</h2>
+          {services.map((s) => <a href={serviceHref(s)}>{s.short}</a>)}
+          <h2>Service Areas</h2>
+          <div class="menu__areas">{areas.map((a) => <a href={areaHref(a)}>{a.name}</a>)}</div>
+          <h2>More</h2>
+          {moreNav.map((n) => <a href={n.href}>{n.label}</a>)}
+          <a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main"><slot /></main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <Image src={p.logo} alt={`${b.name} logo`} widths={[120, 240]} sizes="120px" />
+          <div class="socials">
+            <a href={b.social.Facebook} rel="noopener" aria-label="G&G Rooter on Facebook"><Icon name="facebook" /></a>
+            <a href={b.social.Instagram} rel="noopener" aria-label="G&G Rooter on Instagram"><Icon name="instagram" /></a>
+            <a href={b.social.LinkedIn} rel="noopener" aria-label="G&G Rooter on LinkedIn"><Icon name="linkedin" /></a>
+          </div>
+          <a class="btn btn--wide" href="/contact/">Request Quote</a>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/privacy-policy/">Privacy Policy</a></li>
+            <li><a href="/accessibility/">ADA Accessibility</a></li>
+            <li><a href="/make-a-payment/">Make a Payment</a></li>
+            <li><a href="/employment/">Employment</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Hours</h2>
+          <p>{b.hours}</p>
+          <p style="margin-top:1rem"><a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a></p>
+        </div>
+        <div class="footer__links">
+          <h2>Quick Links</h2>
+          <ul>
+            <li><a href="/drain-sewer-cleaning-services/">Drain &amp; Sewer Cleaning</a></li>
+            <li><a href="/sewer-inspection-services/">Sewer Inspection Services</a></li>
+            <li><a href="/sewage-water-damage-clean-up-services/">Water Damage Cleanup</a></li>
+            <li><a href="/sewage-water-damage-clean-up-services/">Sewage Cleanup</a></li>
+            <li><a href="/mold-mitigation-services/">Mold Mitigation</a></li>
+            <li><a href="/faqs/">FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+      <nav class="footer__areas" aria-label="Service areas">
+        <h2>Lee County Service Areas</h2>
+        <ul>{areas.map((a) => <li><a href={areaHref(a)}>{a.name}</a></li>)}</ul>
+      </nav>
+    </div>
+    <div class="footer__legal">
+      <div class="wrap">
+        <p>© {year} by G and G Rooter. The content on this website is owned by us and our licensors. Do not copy any content (including images) without our consent.</p>
+        <p><a href={b.phoneHref}>{b.phoneDisplay}</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="callbar">
+    <a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now</a>
+    <a class="btn btn--black" href="/contact/">Request Quote</a>
+  </div>
+
+  <script is:inline define:vars={{ phone: b.phoneDisplay }}>
+    (function () {
+      // Every site form posts here. Forms with a file input send multipart data.
+      document.querySelectorAll('[data-site-form]').forEach(function (form) {
+        var status = form.querySelector('[data-form-status]');
+        var button = form.querySelector('button[type=submit]');
+        var fallback = 'Your message wasn’t sent. Please call ' + phone + ' and we’ll take it from there.';
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          status.className = 'form__status';
+          var missing = Array.prototype.find.call(form.querySelectorAll('[required]'), function (el) { return !String(el.value).trim(); });
+          if (missing) {
+            var label = form.querySelector('label[for="' + missing.id + '"]');
+            status.textContent = 'Please fill in ' + (label ? label.textContent.replace('*', '').trim().toLowerCase() : 'the required fields') + '.';
+            status.classList.add('is-error');
+            missing.focus();
+            return;
+          }
+          var fd = new FormData(form);
+          var hasFile = !!form.querySelector('input[type=file]');
+          button.disabled = true;
+          status.textContent = 'Sending…';
+          fetch('/api/form', hasFile ? { method: 'POST', body: fd } : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(fd)) })
+            .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, code: r.status, j: j }; }); })
+            .then(function (res) {
+              if (res.ok) {
+                form.reset();
+                status.textContent = form.getAttribute('data-success') || 'Thanks! We got your request and will call you back shortly. For emergencies, call ' + phone + '.';
+                status.classList.add('is-ok');
+              } else {
+                status.textContent = res.code === 400 && res.j.error ? res.j.error : fallback;
+                status.classList.add('is-error');
+              }
+            })
+            .catch(function () { status.textContent = fallback; status.classList.add('is-error'); })
+            .finally(function () { button.disabled = false; });
+        });
+      });
+      // Pause hero videos for people who prefer less motion.
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('[data-hero-video]').forEach(function (v) { v.pause(); v.removeAttribute('autoplay'); });
+      }
+    })();
+  </script>
+</body>
+</html>

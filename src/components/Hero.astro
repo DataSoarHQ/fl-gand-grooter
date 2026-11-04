@@ -1,0 +1,29 @@
+---
+// Full-width hero over a muted background video, like the main site's homepage
+// and area pages. The poster image shows first and stays if motion is reduced.
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { business as b } from '../data/site';
+import p from '../data/photos';
+
+const { video = '/media/hero-handshake.mp4', poster = p.heroHandshake, eyebrow, intro, title, next = '#more', short = false } = Astro.props;
+---
+<section class:list={['hero', { 'hero--short': short }]}>
+  <div class="hero__media">
+    <Image src={poster} alt="" widths={[800, 1400, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
+    <video autoplay muted loop playsinline preload="metadata" aria-hidden="true" data-hero-video>
+      <source src={video} type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero__in">
+    <p class="stars" aria-label="Five star rated">★★★★★</p>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {intro && <p class="eyebrow hero__intro">{intro}</p>}
+    <h1 set:html={title} />
+    <div class="actions">
+      <a class="btn" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+      <a class="btn btn--outline" href="/contact/">Request Quote</a>
+    </div>
+    <a class="down" href={next} aria-label="Scroll to more information"><Icon name="down" /></a>
+  </div>
+</section>

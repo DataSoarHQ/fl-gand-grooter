@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import WhyChoose from '../components/WhyChoose.astro';
+import { business as b } from '../data/site';
+import p, { gallery } from '../data/photos';
+---
+<Base title="About G&G Rooter | Drain and Sewer Services in Lee County, FL" crumb="About" description="G&G Rooter is a family-owned drain and sewer company with 25+ years of experience, now serving Cape Coral, Fort Myers and all of Lee County, FL.">
+  <section class="section">
+    <div class="wrap about">
+      <div>
+        <p class="kicker">Lee County’s family-owned drain and sewer team</p>
+        <h1>About G&amp;G Rooter</h1>
+        <p>G&amp;G Rooter is family-owned and focused on fast, dependable drain, sewer, cleanup, and mold mitigation service, now across Lee County, Florida.</p>
+        <p>Led by owner {b.owner}, G&amp;G Rooter brings {b.years} years of hands-on sewer and drain cleaning experience to homes and businesses in Cape Coral, Fort Myers, and nearby communities.</p>
+        <div class="actions">
+          <a class="btn" href="/employment/">Join the Team</a>
+          <a class="btn" href="/contact/">Request Quote</a>
+        </div>
+      </div>
+      <div class="about__photo">
+        <Image src={p.techThumbs} alt="G&G Rooter technician smiling and giving a thumbs up beside a drain cleaning machine" widths={[500, 900]} sizes="(max-width: 960px) 100vw, 45vw" loading="eager" />
+      </div>
+    </div>
+  </section>
+  <WhyChoose />
+  <section class="section">
+    <div class="wrap">
+      <div class="section-title"><h2>The Team <span class="hl">at Work</span></h2></div>
+      <div class="gallery">
+        {gallery.map((g, i) => <Image src={g.src} alt={g.alt} widths={i === 0 || i === 5 ? [400, 700] : [300]} sizes={i === 0 || i === 5 ? '(max-width: 640px) 33vw, 40vw' : '(max-width: 640px) 33vw, 20vw'} />)}
+      </div>
+    </div>
+  </section>
+</Base>

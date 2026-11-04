@@ -1,0 +1,109 @@
+---
+// Template for the 20 Lee County service area pages. Follows the page outline in
+// docs/GG_Rooter_Florida_Website_To-Do.pdf, section 4, on the main site's area-page design.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import Marquee from './Marquee.astro';
+import Icon from './Icon.astro';
+import CallbackForm from './CallbackForm.astro';
+import WhyChoose from './WhyChoose.astro';
+import Reviews from './Reviews.astro';
+import { business as b, services, serviceHref } from '../data/site';
+import { areaHref, findArea, settingNotes, type Area } from '../data/areas';
+import p from '../data/photos';
+
+const { area, index } = Astro.props as { area: Area; index: number };
+const place = `${area.name}, FL`;
+const nearby = area.nearby.map(findArea);
+const note = settingNotes[area.setting];
+const photos = [
+  { src: p.drainMachine, alt: `Drain cleaning machine clearing a clogged sink drain in ${place}` },
+  { src: p.cameraInspection, alt: `Sewer camera inspection for a home in ${place}` },
+  { src: p.floorCamera, alt: `Sewer inspection camera beside a floor drain in ${place}` },
+  { src: p.mainLine, alt: `Main sewer line cleaning in ${place}` },
+  { src: p.techThumbs, alt: `G&G Rooter drain technician serving ${place}` },
+];
+const photo = photos[index % photos.length];
+const nearbyText = nearby.length > 1 ? `${nearby.slice(0, -1).map((a) => a.name).join(', ')} and ${nearby.at(-1)!.name}` : nearby[0]?.name;
+const schema = services.map((s) => ({
+  '@type': 'Service',
+  name: `${s.name} in ${place}`,
+  serviceType: s.name,
+  description: `${s.card} Serving ${place} and nearby Lee County communities.`,
+  provider: { '@id': `${b.url}/#business` },
+  areaServed: { '@type': 'Place', name: place },
+}));
+---
+<Base
+  title={`Drain & Sewer Cleaning in ${place}`}
+  crumb={area.name}
+  parents={[{ name: 'Service Areas', href: '/service-areas/' }]}
+  extraSchema={schema}
+  description={`Drain cleaning, sewer cleaning, camera inspections and water cleanup in ${place}. G&G Rooter is open 24/7. Call ${b.phoneDisplay}.`}
+>
+  <Hero intro={`${area.name} homes and businesses call G&G Rooter for clogged drains, sewer backups, and water cleanup, any hour of the day.`} title={`Drain Cleaning and Sewer Cleaning in ${area.name}, FL`} />
+  <Marquee />
+
+  <section class="section" id="more">
+    <div class="wrap area-intro">
+      <div>
+        <p class="kicker">Local drain &amp; sewer service</p>
+        <h2>G&amp;G Rooter in {area.name}</h2>
+        <p>{area.intro}</p>
+        <p>We also serve nearby {nearbyText}, and the rest of Lee County.</p>
+        <p>{area.local}</p>
+        <div class="note">
+          <h3>{note.title}</h3>
+          <p>{note.text}</p>
+        </div>
+      </div>
+      <Image src={photo.src} alt={photo.alt} widths={[500, 800]} sizes="(max-width: 960px) 100vw, 45vw" />
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap">
+      <div class="section-title"><h2>Services in <span class="hl">{area.name}</span></h2></div>
+      <ul class="svc-list">
+        {services.map((s) => (
+          <li><a href={serviceHref(s)}><h3>{s.name}</h3><span>{s.card}</span></a></li>
+        ))}
+      </ul>
+      <ul class="ticks ticks--dark" style="margin-top:2rem;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr))">
+        <li>Open 24 hours, 7 days a week</li>
+        <li>Same-day service available</li>
+        <li>Free quotes</li>
+        <li>{b.years} years of experience</li>
+      </ul>
+    </div>
+  </section>
+
+  <WhyChoose place={area.name} />
+
+  <section class="band band--notch" style="background:var(--green-deep)">
+    <div class="wrap cta-split">
+      <div>
+        <p class="kicker">Need help in {area.name}?</p>
+        <h2>Call Now or Request a Callback</h2>
+        <p>Tell us what’s going on and where you are in {area.name}. For backups and water emergencies, calling is fastest. We answer 24/7.</p>
+        <div class="actions">
+          <a class="btn btn--lg" href={b.phoneHref}><Icon name="phone" />Call Now : {b.phoneDisplay}</a>
+        </div>
+      </div>
+      <CallbackForm page={`Area page: ${area.name}`} flat />
+    </div>
+  </section>
+
+  <Reviews />
+
+  <section class="section section--mist">
+    <div class="wrap center">
+      <div class="section-title"><h2>Also Serving Nearby</h2></div>
+      <div class="nearby">
+        {nearby.map((a) => <a href={areaHref(a)}>Drain cleaning in {a.name}</a>)}
+      </div>
+      <p style="margin-top:1.6rem"><a class="btn btn--black" href="/service-areas/">See all Lee County service areas</a></p>
+    </div>
+  </section>
+</Base>
