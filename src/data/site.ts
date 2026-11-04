@@ -34,6 +34,9 @@ export const business = {
   launch: false,
   // Google Analytics 4 measurement ID (G-XXXXXXX). Blank means no tracking code.
   gaId: '',
+  // Behold (behold.so) feed ID for the @ggrooter Instagram grid. The main Wix site
+  // uses the Instafeed Wix app, which only runs on Wix. Blank shows a Follow button.
+  instagramFeedId: '',
 };
 
 export type Service = {

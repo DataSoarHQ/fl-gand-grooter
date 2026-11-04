@@ -284,6 +284,7 @@ p + p { margin-top: 1em; }
 .social-band h2 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
 .social-band p { margin-top: .5rem; }
 .social-band .actions { justify-content: center; margin-top: 1.2rem; }
+.ig-feed { margin-top: 1.6rem; padding: .6rem; background: var(--white); }
 
 /* Prose pages */
 .prose { max-width: 46rem; }

@@ -23,6 +23,7 @@ Business facts, services, reviews, FAQs and job options are in `src/data/site.ts
 | `googleReviewUrl`, `googleMapsUrl` | Florida Google Business Profile links. The "Leave us a review on Google" button appears once `googleReviewUrl` is filled in. |
 | `paymentUrl` | A Stripe or Square payment link. When set, the payments page shows a "Pay Online Now" button. When blank, the page only collects invoice details and the office follows up. |
 | `gaId` | Google Analytics 4 measurement ID. Blank means no tracking code. |
+| `instagramFeedId` | Feed ID from [Behold](https://behold.so) for the @ggrooter Instagram grid on the homepage. The Wix site uses the Instafeed Wix app, which can't run outside Wix. Sign in to Behold with the @ggrooter account, create a feed, and paste its ID here. Blank shows only the Follow buttons. |
 
 ## Forms
 
